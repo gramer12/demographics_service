@@ -1,0 +1,20 @@
+지도
+지도 깃 https://www.npmjs.com/package/@svg-maps/south-korea
+지도 블로그 https://velog.io/@binhk1004/React-%EC%BD%94%EB%A1%9C%EB%82%98-%ED%98%84%ED%99%A9%ED%8C%90-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EA%B8%B08
+svg안에{
+fill:none;
+stroke:black;}
+
+
+
+
+
+해야할거
+프로젝트 틀 만들기 깃허브 등등
+지도 svg o
+api 불러오기
+DB 에 저장
+chart 라이브러리 사용
+기본 UI틀 
+
+demographics_service
