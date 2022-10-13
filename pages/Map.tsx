@@ -1,7 +1,31 @@
 import { useEffect, useState, useRef } from "react";
-const fetchData = async () => {
+
+interface population {
+  imga_ppltn: string;
+  adm_cd: string;
+  tot_house: string;
+  ppltn_dnsty: string;
+  tot_ppltn: string;
+  aged_child_idx: string;
+  corp_cnt: string;
+  imga_cnt: string;
+  employee_cnt: string;
+  haesuoga_cnt: string;
+  juv_suprt_per: string;
+  haesuoga_ppltn: string;
+  tot_family: string;
+  adm_nm: string;
+  nongga_cnt: string;
+  naesuoga_ppltn: string;
+  avg_age: string;
+  avg_fmember_cnt: string;
+  nongga_ppltn: string;
+  naesuoga_cnt: string;
+  oldage_suprt_per: string;
+}
+const fetchData = async (accessToken: string, year: string) => {
   const data = await fetch(
-    "https://sgisapi.kostat.go.kr/OpenAPI3/stats/population.json?accessToken=07ef0d1c-b093-4495-85bb-725a3837ab61&year=2020&low_search=1"
+    `https://sgisapi.kostat.go.kr/OpenAPI3/stats/population.json?accessToken=${accessToken}&year=${year}&low_search=1`
   )
     .then((res) => res.json())
     .then((json) => json.result);
@@ -13,15 +37,17 @@ export default function Map() {
   const [index, setIndex] = useState("");
 
   const [population, setPopulation] = useState([]);
-  const [as, setAs] = useState([]);
+  const [as, setAs] = useState<population[]>([]);
   let a;
   useEffect(() => {
-    fetchData().then((data) => setPopulation(data));
+    fetchData("e55e18d7-4f85-4660-a9c4-69c4fb4a80b9", "2020").then((data) =>
+      setPopulation(data)
+    );
   }, []);
   useEffect(() => {
     if (population.length !== 0 && population !== undefined) {
       setAs(
-        ...population.filter((ele) => {
+        population.filter((ele: population) => {
           return ele.adm_cd == index ? true : false;
         })
       );
@@ -29,13 +55,19 @@ export default function Map() {
     }
   }, [population && index]);
 
+  console.log(population);
+
   //tot_ppltn, adm_nm, adm_cd
 
   return (
     <>
       <div>
-        {as
-          ? as.adm_nm + "  " + as.tot_ppltn + "명 행정코드 :" + as.adm_cd
+        {as[0]
+          ? as[0].adm_nm +
+            "  " +
+            as[0].tot_ppltn +
+            "명 행정코드 :" +
+            as[0].adm_cd
           : ""}
       </div>
       <svg
