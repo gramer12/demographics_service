@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-interface population {
+interface Population {
   imga_ppltn: string;
   adm_cd: string;
   tot_house: string;
@@ -27,8 +27,8 @@ const fetchData = async (accessToken: string, year: string) => {
   const data = await fetch(
     `https://sgisapi.kostat.go.kr/OpenAPI3/stats/population.json?accessToken=${accessToken}&year=${year}&low_search=1`
   )
-    .then((res) => res.json())
-    .then((json) => json.result);
+    .then((res: any) => res.json())
+    .then((json: any) => json.result);
 
   return data;
 };
@@ -37,17 +37,17 @@ export default function Map() {
   const [index, setIndex] = useState("");
 
   const [population, setPopulation] = useState([]);
-  const [as, setAs] = useState<population[]>([]);
+  const [as, setAs] = useState<Population[]>([]);
   let a;
   useEffect(() => {
-    fetchData("e55e18d7-4f85-4660-a9c4-69c4fb4a80b9", "2020").then((data) =>
+    fetchData("8cdc7f4f-2965-440b-9139-155783b1fe74", "2020").then((data) =>
       setPopulation(data)
     );
   }, []);
   useEffect(() => {
     if (population.length !== 0 && population !== undefined) {
       setAs(
-        population.filter((ele: population) => {
+        population.filter((ele: Population) => {
           return ele.adm_cd == index ? true : false;
         })
       );
